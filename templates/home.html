@@ -10,7 +10,9 @@
 
 <body>
   <div class="container">
+    <!-- the account_value is updated as each button below is clicked -->
     <h3 class="spacer">Your Gold: <span id="account-value">{{account_value}}</span></h3>
+    <!-- form values defined for a farm, cave, house, or casino -->
     <div class="row spacer">
       <div class="col-sm-3">
         <form action="/process_money" method="post" class="text-center location">
@@ -56,6 +58,7 @@
     <div class="row spacer">
       <div class="col-sm-12">
         <h3>Activities:</h3>
+        <!-- for each transaction that occurred, render the message below for either a gain or loss -->
         <div class="activities">
           {% block content %}
             {% for message in account_history %}
