@@ -1,7 +1,5 @@
 from datetime import datetime
-import math
 import random
-import numpy as np
 from flask import Flask, render_template, redirect, request, url_for
 app = Flask(__name__)
 
@@ -20,11 +18,11 @@ def update_account(result, value):
     account_history.append(dict(
         result=result,
         value=value,
-        date=datetime.utcnow()
+        date=datetime.utcnow().strftime('%Y/%m/%d %I:%M %p')
     ))
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
     global account_value, account_history
     print('History: ', account_history)

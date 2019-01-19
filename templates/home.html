@@ -5,49 +5,71 @@
   <meta charset="utf-8">
   <title>Flask Tutorial</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css') }}">
 </head>
 
 <body>
   <div class="container">
-    <h3>Your Gold: {{account_value}}</h3>
-    <div>
-      <form action="/process_money" method="post">
-        <h2>Farm</h2>
-        <input type="hidden" name="building" value="farm" />
-        <input type="submit" value="Find Gold!" />
-      </form>
-      <form action="/process_money" method="post">
-        <h2>Cave</h2>
-        <input type="hidden" name="building" value="cave" />
-        <input type="submit" value="Find Gold!" />
-      </form>
-      <form action="/process_money" method="post">
-        <h2>House</h2>
-        <input type="hidden" name="building" value="house" />
-        <input type="submit" value="Find Gold!" />
-      </form>
-      <form action="/process_money" method="post">
-        <h2>Casino</h2>
-        <input type="hidden" name="building" value="casino" />
-        <input type="submit" value="Find Gold!" />
-      </form>
-    </div>
-    <div>
-      <h3>Activities:</h3>
-      <div>
-        {% block content %}
-          {% for message in account_history %}
-            {% if message.value >= 0 %}
-              <p>Earned {{message.value}}</p>
-            {% elif message.value <= 0 %}
-              <p>Lost {{message.value*(-1)}}</p>
-            {% endif %}
-          {% endfor %}
-        {% endblock content %}
+    <h3 class="spacer">Your Gold: <span id="account-value">{{account_value}}</span></h3>
+    <div class="row spacer">
+      <div class="col-sm-3">
+        <form action="/process_money" method="post" class="text-center location">
+          <div class="form-group">
+            <h2>Farm</h2>
+            <span>(earns 10-20 golds)</span>
+            <input type="hidden" name="building" value="farm" />
+          </div>
+          <button type="submit" value="Find Gold!" class="btn btn-primary">Find Gold!</button>
+        </form>
+      </div>
+      <div class="col-sm-3">
+        <form action="/process_money" method="post" class="text-center location">
+          <div class="form-group">
+            <h2>Cave</h2>
+            <span>(earns 5-10 golds)</span>
+            <input type="hidden" name="building" value="cave" />
+          </div>
+          <button type="submit" value="Find Gold!" class="btn btn-primary">Find Gold!</button>
+        </form>
+      </div>
+      <div class="col-sm-3">
+        <form action="/process_money" method="post" class="text-center location">
+          <div class="form-group"  >
+            <h2>House</h2>
+            <span>(earns 2-5 golds)</span>
+            <input type="hidden" name="building" value="house" />
+          </div>
+          <button type="submit" value="Find Gold!" class="btn btn-primary">Find Gold!</button>
+        </form>
+      </div>
+      <div class="col-sm-3">
+        <form action="/process_money" method="post" class="text-center location">
+          <div class="form-group">
+            <h2>Casino</h2>
+            <span>(earns/takes 0-50 golds)</span>
+            <input type="hidden" name="building" value="casino" />
+          </div>
+          <button type="submit" value="Find Gold!" class="btn btn-primary">Find Gold!</button>
+        </form>
       </div>
     </div>
-  </div>
+    <div class="row spacer">
+      <div class="col-sm-12">
+        <h3>Activities:</h3>
+        <div class="activities">
+          {% block content %}
+            {% for message in account_history %}
+              {% if message.value >= 0 %}
+                <p>Earned {{message.value}} golds from the {{message.result}}! ({{message.date + " UTC"}})</p>
+              {% elif message.value <= 0 %}
+                <p>Entered a {{message.result}} and lost {{message.value*(-1)}}...Ouch. ({{message.date + " UTC"}})</p>
+              {% endif %}
+            {% endfor %}
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+    <footer class="text-center" id="copyright">&copy; Dan Buchholz, 2019</footer>
 </body>
 
 </html>
